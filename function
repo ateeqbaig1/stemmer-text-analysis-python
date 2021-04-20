@@ -8,38 +8,52 @@ def pos(sentense):
     
     stemmed = []
     for word in words:
-        if "'" in word or word[-2:] == 'ed' or word[-2:] == 'er' or word[-2:] == 'ly':
-            stemmed.append(word[:-2])
-        elif word[-1] == 's':
+        if word[-2:] == 'ed' and word[-3:] != 'ied':
+            word = word[:-2]
+        if word[-1] == 's':
+            if "'" in word:
+                word = word[:-2]
             if word[-2] in vowels:
-                stemmed.append(word)
-            elif word[-2] == 'u' or word[-2] == 's':
-                stemmed.append(word)
-            elif word[-4:] == 'sses':
-                stemmed.append(word[:-2])
-            elif word[-3:] == 'ies':
-                if len(word [:-3]) <= 2:
-                    stemmed.append(word[:-1])
+                if word[-2:] == 'us' or word[-2:] == 'ss':
+                    word = word
+                if word[-4:] == 'sses':
+                    word = word[:-2]
+                if word[-3:] == 'ies':
+                    if len(word [:-2]) <= 2:
+                        word = word[:-1]
+                    else:
+                        word = word[:-2]
                 else:
-                    stemmed.append(word[:-2])
+                    word = word
             else:
-                stemmed.append(word[:-1])
-        elif word[-3:] == 'ied':
-                if len(word [:-3]) <= 2:
-                    stemmed.append(word[:-1])
+                word = word[:-1]
+        if word[-3:] == 'ied':
+                if len(word [:-2]) <= 2:
+                    word = word[:-1]
                 else:
-                    stemmed.append(word[:-2])
-        elif word[-3:] == 'ing':
-                if len(word [:-3]) <= 3:
-                    stemmed.append(word)
+                    word = word[:-2]
+        if word[-3:] == 'ing':
+                if len(word [:-3]) < 3:
+                    word = word
                 else:
-                    stemmed.append(word[:-3])
-        else:
-            stemmed.append(word)
+                    word = word[:-3]
+        if word[-2:] == 'ly':
+            word = word[:-2]
+        if word[-2:] == 'er':
+                word = word[:-2]
+        if word[-3:] == 'ers':
+            word = word[:-3]
+        
+        stemmed.append(word)
+            
+            
+        
                 
     return " ".join(stemmed)
 
-stemmed1 = pos("it's name was theirs' to say and with gaps they smelled gas and this was not okay.")
+stemmed1 = pos("The consensus chopped off last Friday while the voters were tied down flying without counting properly so wasn't a great day after all")
 stemmed2 = pos("I went to BTS concert with my bonus pay and I cried there as my heart melted away from their singing, it was utterly beautiful I just felt possessed")
+stemmed3 = pos("proper")
 print(stemmed1)
 print(stemmed2)
+print(stemmed3)
