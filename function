@@ -1,0 +1,45 @@
+def pos(sentense):
+    """
+    finds the root word for each word in the input sentense, and output in the form of a sentense. 
+    """
+    
+    words = list(sentense.split(sep=" "))
+    vowels = 'aeiouy'
+    
+    stemmed = []
+    for word in words:
+        if "'" in word or word[-2:] == 'ed' or word[-2:] == 'er' or word[-2:] == 'ly':
+            stemmed.append(word[:-2])
+        elif word[-1] == 's':
+            if word[-2] in vowels:
+                stemmed.append(word)
+            elif word[-2] == 'u' or word[-2] == 's':
+                stemmed.append(word)
+            elif word[-4:] == 'sses':
+                stemmed.append(word[:-2])
+            elif word[-3:] == 'ies':
+                if len(word [:-3]) <= 2:
+                    stemmed.append(word[:-1])
+                else:
+                    stemmed.append(word[:-2])
+            else:
+                stemmed.append(word[:-1])
+        elif word[-3:] == 'ied':
+                if len(word [:-3]) <= 2:
+                    stemmed.append(word[:-1])
+                else:
+                    stemmed.append(word[:-2])
+        elif word[-3:] == 'ing':
+                if len(word [:-3]) <= 3:
+                    stemmed.append(word)
+                else:
+                    stemmed.append(word[:-3])
+        else:
+            stemmed.append(word)
+                
+    return " ".join(stemmed)
+
+stemmed1 = pos("it's name was theirs' to say and with gaps they smelled gas and this was not okay.")
+stemmed2 = pos("I went to BTS concert with my bonus pay and I cried there as my heart melted away from their singing, it was utterly beautiful I just felt possessed")
+print(stemmed1)
+print(stemmed2)
